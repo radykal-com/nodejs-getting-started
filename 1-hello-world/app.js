@@ -17,17 +17,18 @@ var express = require('express');
 
 var app = express();
 
+
 // [START hello_world]
 // Say hello!
 app.get('/', function (req, res) {
-  res.status(200).send('Hello, world!');
+  res.status(200).send('Hello, world! (Public)');
 });
 // [END hello_world]
 
 if (module === require.main) {
   // [START server]
   // Start the server
-  var server = app.listen(process.env.PORT || 8080, function () {
+  var server = app.listen(80, function () {
     var port = server.address().port;
     console.log('App listening on port %s', port);
   });
@@ -35,3 +36,25 @@ if (module === require.main) {
 }
 
 module.exports = app;
+
+var app_private = express();
+
+
+// [START hello_world]
+// Say hello!
+app_private.get('/', function (req, res) {
+  res.status(200).send('Hello, world! (Private)');
+});
+// [END hello_world]
+
+if (module === require.main) {
+  // [START server]
+  // Start the server
+  var server_private = app_private.listen(8080, function () {
+    var port_private = server_private.address().port;
+    console.log('App listening on port %s', port_private);
+  });
+  // [END server]
+}
+
+module.exports = app_private;
